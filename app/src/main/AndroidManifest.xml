@@ -17,7 +17,8 @@
             </intent-filter>
         </activity>
         <activity android:name=".OperatorActivity" />
-        <activity android:name=".MechanicActivity"></activity>
+        <activity android:name=".MechanicActivity" />
+        <activity android:name=".ViewDataActivity"></activity>
     </application>
 
 </manifest>
