@@ -12,9 +12,6 @@ import android.widget.Toast;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 
-import java.util.Calendar;
-import java.util.Date;
-
 public class OperatorActivity extends AppCompatActivity {
 
     private Button submitBtn;
@@ -28,14 +25,18 @@ public class OperatorActivity extends AppCompatActivity {
         editCardNo = findViewById(R.id.editCardNo);
         editLineNo = findViewById(R.id.editLineNo);
 
+        final MainActivity mainActivity = new MainActivity();
+
         submitBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                String getToken = mainActivity.getFCMToken();
                 DatabaseReference reference = FirebaseDatabase.getInstance().getReference();
                 DatabaseReference referenceChild1 = reference.child("Operator :");
                 DatabaseReference referenceChild2 = referenceChild1.child(editCardNo.getText().toString().trim());
                 referenceChild2.child("CardNo").setValue(editCardNo.getText().toString().trim());
                 referenceChild2.child("LineNo").setValue(editLineNo.getText().toString().trim());
+                referenceChild2.child("FCM Token").setValue(getToken);
                 Toast.makeText(getApplicationContext(),"Informed to Mechanic",Toast.LENGTH_SHORT).show();
                 editCardNo.setText("");
                 editLineNo.setText("");
