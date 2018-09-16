@@ -2,7 +2,8 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     package="services.ease.easeservices">
 
-    <uses-permission android:name="android.permission.INTERNET"/>
+    <uses-permission android:name="android.permission.INTERNET" />
+
     <application
         android:allowBackup="true"
         android:icon="@mipmap/ic_launcher"
@@ -17,6 +18,7 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
+
         <service android:name=".MyFirebaseInstanceIDService">
             <intent-filter>
                 <action android:name="com.google.firebase.INSTANCE_ID_EVENT" />
@@ -27,15 +29,23 @@
                 <action android:name="com.google.firebase.MESSAGING_EVENT" />
             </intent-filter>
         </service>
-        <activity android:name=".OperatorActivity" >
+
+        <activity android:name=".OperatorActivity">
             <intent-filter>
-                <action android:name="operator" />
+                <action android:name=".OperatorActivity" />
+
                 <category android:name="android.intent.category.DEFAULT" />
             </intent-filter>
         </activity>
-        <activity android:name=".MechanicActivity" />
-        <activity android:name=".ViewDataActivity"></activity>
+        <activity android:name=".MechanicActivity">
+            <intent-filter>
+                <action android:name=".MechanicActivity" />
+                <category android:name="android.intent.category.DEFAULT" />
+            </intent-filter>
+        </activity>
+        <activity android:name=".MechanicActivity2" />
+        <activity android:name=".PendingRequestsActivity" />
+        <activity android:name=".CompletedRequestsActivity"></activity>
     </application>
-
 
 </manifest>

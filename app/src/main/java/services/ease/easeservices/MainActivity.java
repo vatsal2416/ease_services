@@ -38,8 +38,8 @@ public class MainActivity extends AppCompatActivity {
         mechanicBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                //Intent intent = new Intent(MainActivity.this,MechanicActivity.class);
-                //startActivity(intent);
+                Intent intent = new Intent(MainActivity.this,MechanicActivity.class);
+                startActivity(intent);
             }
         });
 
@@ -53,5 +53,12 @@ public class MainActivity extends AppCompatActivity {
                         Log.d("TopicSubscription", "Task completed");
                     }
                 });
+    }
+
+    @Override
+    public void onBackPressed() {
+        super.onBackPressed();
+        startActivity(new Intent(MainActivity.this, MainActivity.class));
+        finish();
     }
 }

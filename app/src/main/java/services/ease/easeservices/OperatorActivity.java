@@ -38,8 +38,6 @@ public class OperatorActivity extends AppCompatActivity {
                     DatabaseReference referenceChild2 = referenceChild1.child(editCardNo.getText().toString().trim());
                     referenceChild2.child("CardNo").setValue(editCardNo.getText().toString());
                     referenceChild2.child("LineNo").setValue(editLineNo.getText().toString().trim());
-                    referenceChild2.child("completed").setValue("false");
-                    referenceChild1.child("FCM_Token").child(editCardNo.getText().toString().trim()).setValue(FirebaseInstanceId.getInstance().getToken());
                     Toast.makeText(getApplicationContext(),"Informed to Mechanic",Toast.LENGTH_SHORT).show();
                     editCardNo.setText("");
                     editLineNo.setText("");
@@ -47,6 +45,12 @@ public class OperatorActivity extends AppCompatActivity {
                 }
             }
         });
+    }
 
+    @Override
+    public void onBackPressed() {
+        super.onBackPressed();
+        startActivity(new Intent(OperatorActivity.this, MainActivity.class));
+        finish();
     }
 }
