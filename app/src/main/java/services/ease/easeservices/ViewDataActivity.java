@@ -1,10 +1,12 @@
 package services.ease.easeservices;
 
+import android.content.pm.ActivityInfo;
 import android.support.annotation.NonNull;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.widget.ArrayAdapter;
 import android.widget.ListView;
+import android.widget.Toast;
 
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
@@ -22,7 +24,7 @@ public class ViewDataActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_view_data);
-
+        setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_PORTRAIT);
         listView = findViewById(R.id.listView);
         DatabaseReference reference = FirebaseDatabase.getInstance().getReference("Operator :");
         final List<String> list = new ArrayList<>();
@@ -35,6 +37,7 @@ public class ViewDataActivity extends AppCompatActivity {
                     String msg = "";
                     msg = msg +"\n"+data1.getValue();
                     list.add(msg);
+
                 }
 
                 ArrayAdapter<String> myadapter = new ArrayAdapter<String>

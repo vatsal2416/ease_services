@@ -27,7 +27,12 @@
                 <action android:name="com.google.firebase.MESSAGING_EVENT" />
             </intent-filter>
         </service>
-        <activity android:name=".OperatorActivity" />
+        <activity android:name=".OperatorActivity" >
+            <intent-filter>
+                <action android:name="operator" />
+                <category android:name="android.intent.category.DEFAULT" />
+            </intent-filter>
+        </activity>
         <activity android:name=".MechanicActivity" />
         <activity android:name=".ViewDataActivity"></activity>
     </application>
