@@ -1,12 +1,17 @@
 package services.ease.easeservices;
 
+import android.app.AlertDialog;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.pm.ActivityInfo;
 import android.support.annotation.NonNull;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.view.View;
+import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.ListView;
+import android.widget.Toast;
 
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
@@ -14,12 +19,17 @@ import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 
-public class CompletedRequestsActivity extends AppCompatActivity {
+public class CompletedRequestsActivity extends AppCompatActivity implements AdapterView.OnItemClickListener{
 
     private ListView listView;
+    AlertDialog.Builder atlDial;
+    String item;
+    String mechanicCardNo;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -30,6 +40,8 @@ public class CompletedRequestsActivity extends AppCompatActivity {
         DatabaseReference reference = FirebaseDatabase.getInstance().getReference("Accepted Requests");
         final List<String> list = new ArrayList<>();
 
+        Intent getIntent = getIntent();
+        mechanicCardNo = getIntent.getStringExtra("mechanicCardNo");
         reference.addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
@@ -48,6 +60,9 @@ public class CompletedRequestsActivity extends AppCompatActivity {
                 //Cancel
             }
         });
+
+        listView.setOnItemClickListener(this);
+
     }
     @Override
     public void onBackPressed() {
@@ -55,5 +70,49 @@ public class CompletedRequestsActivity extends AppCompatActivity {
         startActivity(new Intent(CompletedRequestsActivity.this, MechanicActivity.class));
         finish();
 
+    }
+
+    @Override
+    public void onItemClick(AdapterView<?> adapter, View arg1, int position, long arg3) {
+        Toast.makeText(getApplicationContext(),"Clicked",Toast.LENGTH_SHORT).show();
+        item = adapter.getItemAtPosition(position).toString();
+        atlDial = new AlertDialog.Builder(CompletedRequestsActivity.this);
+        atlDial.setMessage("Do you want to accept this Request?" + "\n"+item).setCancelable(false)
+                .setPositiveButton("Yes", new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialog, int which) {
+
+                        insert(item);
+                        Toast.makeText(getApplicationContext(),"Repair request logged.",Toast.LENGTH_SHORT).show();
+                        startActivity(new Intent(CompletedRequestsActivity.this,MechanicActivity.class));
+                    }
+                }).setNegativeButton("No", new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialog, int which) {
+                Toast.makeText(getApplicationContext(),"Rejected by Mechanic",Toast.LENGTH_SHORT).show();
+            }
+        });
+
+        AlertDialog alert = atlDial.create();
+        alert.show();
+    }
+
+    public String getCurrentTime(){
+        Date today = new Date();
+        SimpleDateFormat format = new SimpleDateFormat("yyyy-MM-dd hh:mm:ss a");
+        String dateToStr = format.format(today);
+        return dateToStr;
+    }
+
+    private void insert(String data) throws NullPointerException{
+        if(!mechanicCardNo.equals("")){
+            DatabaseReference reference = FirebaseDatabase.getInstance().getReference();
+            DatabaseReference reference1 = reference.child("Completed Requests");
+            DatabaseReference reference2 = reference1.child(mechanicCardNo);
+            String insertData = data+"\nEnd Time : "+getCurrentTime();
+            reference2.child("Operator Info").setValue("Mechanic : "+mechanicCardNo+insertData);
+          }else{
+            Toast.makeText(getApplicationContext(),"Please restart Application",Toast.LENGTH_SHORT).show();
+        }
     }
 }

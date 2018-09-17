@@ -23,11 +23,10 @@ import java.util.List;
 
 public class MechanicActivity extends AppCompatActivity {
 
-    private Button btnGetData, btnMechanicCardNo;
-    private DatabaseReference database1,database2;
+    private Button btnMechanicCardNo;
+    private DatabaseReference database1;
     private EditText editMechanicCard;
-    int i,j;
-    private String mechanicCardNo;
+    int i;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -41,7 +40,6 @@ public class MechanicActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 if(!(editMechanicCard.getText().toString().trim()).equals("")){
-                    mechanicCardNo = editMechanicCard.getText().toString().trim();
                     DatabaseReference reference = FirebaseDatabase.getInstance().getReference();
                     DatabaseReference referenceChild1 = reference.child("Mechanic");
                     referenceChild1.child(editMechanicCard.getText().toString().trim()).setValue(editMechanicCard.getText().toString().trim());
@@ -49,7 +47,7 @@ public class MechanicActivity extends AppCompatActivity {
                     intent.putExtra("mechanicCardNo",editMechanicCard.getText().toString().trim());
                     startActivity(intent);
                 }else{
-                    Toast.makeText(getApplicationContext(),"CardNo cannot be emptt!",Toast.LENGTH_SHORT);
+                    Toast.makeText(getApplicationContext(),"CardNo cannot be empty!",Toast.LENGTH_SHORT);
                 }
             }
         });

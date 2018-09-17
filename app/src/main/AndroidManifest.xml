@@ -40,12 +40,14 @@
         <activity android:name=".MechanicActivity">
             <intent-filter>
                 <action android:name=".MechanicActivity" />
+
                 <category android:name="android.intent.category.DEFAULT" />
             </intent-filter>
         </activity>
         <activity android:name=".MechanicActivity2" />
         <activity android:name=".PendingRequestsActivity" />
-        <activity android:name=".CompletedRequestsActivity"></activity>
+        <activity android:name=".CompletedRequestsActivity" />
+        <activity android:name=".CompletedActivity2"></activity>
     </application>
 
 </manifest>

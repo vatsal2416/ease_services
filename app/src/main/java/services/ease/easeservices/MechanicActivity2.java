@@ -9,7 +9,7 @@ import android.widget.Button;
 
 public class MechanicActivity2 extends AppCompatActivity {
 
-    private Button btnPending, btnCompleted;
+    private Button btnPending, btnCompleted, btnCompleted2;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -18,7 +18,7 @@ public class MechanicActivity2 extends AppCompatActivity {
 
         btnPending = findViewById(R.id.btnPendingRequests);
         btnCompleted = findViewById(R.id.btnCompletedRequests);
-
+        btnCompleted2 = findViewById(R.id.btnComplete2);
         btnPending.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -30,10 +30,22 @@ public class MechanicActivity2 extends AppCompatActivity {
             }
         });
 
+        btnCompleted2.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(MechanicActivity2.this,CompletedActivity2.class);
+                startActivity(intent);
+            }
+        });
+
         btnCompleted.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                startActivity(new Intent(MechanicActivity2.this,CompletedRequestsActivity.class));
+                Intent intent = getIntent();
+                Intent intent1 = new Intent(MechanicActivity2.this,CompletedRequestsActivity.class);
+                String cardNo = intent.getStringExtra("mechanicCardNo");
+                intent1.putExtra("mechanicCardNo",cardNo);
+                startActivity(intent1);
             }
         });
     }

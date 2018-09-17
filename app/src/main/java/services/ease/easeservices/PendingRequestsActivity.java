@@ -77,7 +77,7 @@ public class PendingRequestsActivity extends AppCompatActivity implements Adapte
 
                         insert(item);
                         Toast.makeText(getApplicationContext(),"Repair request logged.",Toast.LENGTH_SHORT).show();
-                        startActivity(new Intent(PendingRequestsActivity.this,MechanicActivity2.class));
+                        startActivity(new Intent(PendingRequestsActivity.this,MechanicActivity.class));
                     }
                 }).setNegativeButton("No", new DialogInterface.OnClickListener() {
             @Override
@@ -98,14 +98,14 @@ public class PendingRequestsActivity extends AppCompatActivity implements Adapte
     }
     private void insert(String data) throws NullPointerException{
         Intent intent = getIntent();
-        String cardNo = intent.getStringExtra("mechanicCardNo");
+        String cardNo = intent.getStringExtra("mechanicCardNo").trim();
         if(!cardNo.equals("")){
             DatabaseReference reference = FirebaseDatabase.getInstance().getReference();
             DatabaseReference reference1 = reference.child("Accepted Requests");
             DatabaseReference reference2 = reference1.child(cardNo);
             String insertData = data+"\nStart Time : "+getCurrentTime();
-            reference2.child("Operator Info").setValue(insertData);
-        }else{
+            reference2.child("Operator Info").setValue("Mechanic : "+cardNo+insertData);
+            }else{
             Toast.makeText(getApplicationContext(),"Please restart Application",Toast.LENGTH_SHORT).show();
         }
     }
