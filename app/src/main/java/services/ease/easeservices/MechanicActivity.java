@@ -39,15 +39,19 @@ public class MechanicActivity extends AppCompatActivity {
         btnMechanicCardNo.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                if(!(editMechanicCard.getText().toString().trim()).equals("")){
-                    DatabaseReference reference = FirebaseDatabase.getInstance().getReference();
-                    DatabaseReference referenceChild1 = reference.child("Mechanic");
-                    referenceChild1.child(editMechanicCard.getText().toString().trim()).setValue(editMechanicCard.getText().toString().trim());
-                    Intent intent = new Intent(MechanicActivity.this,MechanicActivity2.class);
-                    intent.putExtra("mechanicCardNo",editMechanicCard.getText().toString().trim());
-                    startActivity(intent);
+                if(checkMechanic(editMechanicCard.getText().toString().trim())){
+                    if(!(editMechanicCard.getText().toString().trim()).equals("")){
+                        DatabaseReference reference = FirebaseDatabase.getInstance().getReference();
+                        DatabaseReference referenceChild1 = reference.child("Mechanic");
+                        referenceChild1.child(editMechanicCard.getText().toString().trim()).setValue(editMechanicCard.getText().toString().trim());
+                        Intent intent = new Intent(MechanicActivity.this,MechanicActivity2.class);
+                        intent.putExtra("mechanicCardNo",editMechanicCard.getText().toString().trim());
+                        startActivity(intent);
+                    }else{
+                        Toast.makeText(getApplicationContext(),"CardNo cannot be empty!",Toast.LENGTH_SHORT);
+                    }
                 }else{
-                    Toast.makeText(getApplicationContext(),"CardNo cannot be empty!",Toast.LENGTH_SHORT);
+                    Toast.makeText(getApplicationContext(),"Invalid Mechannic CardNo!",Toast.LENGTH_SHORT).show();
                 }
             }
         });
@@ -58,5 +62,17 @@ public class MechanicActivity extends AppCompatActivity {
         super.onBackPressed();
         startActivity(new Intent(MechanicActivity.this, MainActivity.class));
         finish();
+    }
+
+    protected boolean checkMechanic(String mechanicNo){
+        boolean validMechanic = false;
+
+        if(mechanicNo.equals("563341") || mechanicNo.equals("732145")){
+            validMechanic = true;
+        }else{
+            validMechanic = false;
+        }
+
+        return validMechanic;
     }
 }

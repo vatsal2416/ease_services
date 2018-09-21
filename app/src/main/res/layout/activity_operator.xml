@@ -26,7 +26,7 @@
         android:layout_marginTop="124dp"
         android:ems="10"
         android:hint="@string/card_no"
-        android:inputType="textPersonName"
+        android:inputType="number"
         app:layout_constraintBottom_toTopOf="@+id/submitBtn"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
@@ -40,7 +40,7 @@
         android:layout_marginTop="19dp"
         android:ems="10"
         android:hint="@string/line_no"
-        android:inputType="textPersonName"
+        android:inputType="number"
         app:layout_constraintStart_toStartOf="@+id/editCardNo"
         app:layout_constraintTop_toBottomOf="@+id/editCardNo" />
 

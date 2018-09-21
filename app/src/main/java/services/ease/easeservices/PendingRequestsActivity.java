@@ -62,19 +62,16 @@ public class PendingRequestsActivity extends AppCompatActivity implements Adapte
             }
         });
         listView.setOnItemClickListener(this);
-
     }
 
     @Override
     public void onItemClick(AdapterView<?> adapter, View arg1, int position, long arg3) {
-        Toast.makeText(getApplicationContext(),"Clicked",Toast.LENGTH_SHORT).show();
         item = adapter.getItemAtPosition(position).toString();
         atlDial = new AlertDialog.Builder(PendingRequestsActivity.this);
         atlDial.setMessage("Do you want to accept this Request?" + "\n"+item).setCancelable(false)
                 .setPositiveButton("Yes", new DialogInterface.OnClickListener() {
                     @Override
                     public void onClick(DialogInterface dialog, int which) {
-
                         insert(item);
                         Toast.makeText(getApplicationContext(),"Repair request logged.",Toast.LENGTH_SHORT).show();
                         startActivity(new Intent(PendingRequestsActivity.this,MechanicActivity.class));
@@ -85,7 +82,6 @@ public class PendingRequestsActivity extends AppCompatActivity implements Adapte
                 Toast.makeText(getApplicationContext(),"Rejected by Mechanic",Toast.LENGTH_SHORT).show();
             }
         });
-
         AlertDialog alert = atlDial.create();
         alert.show();
     }
@@ -104,7 +100,7 @@ public class PendingRequestsActivity extends AppCompatActivity implements Adapte
             DatabaseReference reference1 = reference.child("Accepted Requests");
             DatabaseReference reference2 = reference1.child(cardNo);
             String insertData = data+"\nStart Time : "+getCurrentTime();
-            reference2.child("Operator Info").setValue("Mechanic : "+cardNo+insertData);
+            reference2.child("Operator Info").setValue("\nMechanic : "+cardNo+insertData);
             }else{
             Toast.makeText(getApplicationContext(),"Please restart Application",Toast.LENGTH_SHORT).show();
         }

@@ -30,18 +30,22 @@ public class OperatorActivity extends AppCompatActivity {
         submitBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                if((editCardNo.getText().toString().trim()).equals("") || (editLineNo.getText().toString().trim()).equals("")){
-                    Toast.makeText(getApplicationContext(),"Card No. or Line No. cannot be Empty!",Toast.LENGTH_SHORT).show();
+                if(checkOperator(editCardNo.getText().toString())){
+                    if((editCardNo.getText().toString().trim()).equals("") || (editLineNo.getText().toString().trim()).equals("")){
+                        Toast.makeText(getApplicationContext(),"Card No. or Line No. cannot be Empty!",Toast.LENGTH_SHORT).show();
+                    }else{
+                        DatabaseReference reference = FirebaseDatabase.getInstance().getReference();
+                        DatabaseReference referenceChild1 = reference.child("Operator :");
+                        DatabaseReference referenceChild2 = referenceChild1.child(editCardNo.getText().toString().trim());
+                        referenceChild2.child("CardNo").setValue(editCardNo.getText().toString());
+                        referenceChild2.child("LineNo").setValue(editLineNo.getText().toString().trim());
+                        Toast.makeText(getApplicationContext(),"Informed to Mechanic",Toast.LENGTH_SHORT).show();
+                        editCardNo.setText("");
+                        editLineNo.setText("");
+                        startActivity(new Intent(OperatorActivity.this,MainActivity.class));
+                    }
                 }else{
-                    DatabaseReference reference = FirebaseDatabase.getInstance().getReference();
-                    DatabaseReference referenceChild1 = reference.child("Operator :");
-                    DatabaseReference referenceChild2 = referenceChild1.child(editCardNo.getText().toString().trim());
-                    referenceChild2.child("CardNo").setValue(editCardNo.getText().toString());
-                    referenceChild2.child("LineNo").setValue(editLineNo.getText().toString().trim());
-                    Toast.makeText(getApplicationContext(),"Informed to Mechanic",Toast.LENGTH_SHORT).show();
-                    editCardNo.setText("");
-                    editLineNo.setText("");
-                    startActivity(new Intent(OperatorActivity.this,MainActivity.class));
+                    Toast.makeText(getApplicationContext(),"Invalid Operator Number",Toast.LENGTH_SHORT).show();
                 }
             }
         });
@@ -49,8 +53,19 @@ public class OperatorActivity extends AppCompatActivity {
 
     @Override
     public void onBackPressed() {
-        super.onBackPressed();
-        startActivity(new Intent(OperatorActivity.this, MainActivity.class));
         finish();
+        super.onBackPressed();
+    }
+
+    protected boolean checkOperator(String operatorNo){
+        boolean validOperator = false;
+
+        if(operatorNo.equals("814171") || operatorNo.equals("241949") || operatorNo.equals("200967") || operatorNo.equals("246640") || operatorNo.equals("243130")
+                || operatorNo.equals("659494") || operatorNo.equals("600217") || operatorNo.equals("248133") || operatorNo.equals("248133") || operatorNo.equals("248126")){
+            validOperator = true;
+        }else{
+            validOperator = false;
+        }
+        return validOperator;
     }
 }
