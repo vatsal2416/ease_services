@@ -37,7 +37,6 @@ public class PendingRequestsActivity extends AppCompatActivity implements Adapte
         setContentView(R.layout.activity_pending_requests);
         setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_PORTRAIT);
 
-
         listView = findViewById(R.id.listPending);
         DatabaseReference reference = FirebaseDatabase.getInstance().getReference("Operator :");
         final List<String> list = new ArrayList<>();

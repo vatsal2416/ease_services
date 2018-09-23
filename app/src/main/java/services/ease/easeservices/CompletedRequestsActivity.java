@@ -51,7 +51,7 @@ public class CompletedRequestsActivity extends AppCompatActivity implements Adap
                     msg = data1.getValue().toString().trim();
                     list.add(msg);
                 }
-                ArrayAdapter<String> myadapter = new ArrayAdapter<String>
+                ArrayAdapter<String> myadapter = new ArrayAdapter<>
                         (CompletedRequestsActivity.this,android.R.layout.simple_list_item_1,list);
                 listView.setAdapter(myadapter);
             }
@@ -74,22 +74,21 @@ public class CompletedRequestsActivity extends AppCompatActivity implements Adap
 
     @Override
     public void onItemClick(AdapterView<?> adapter, View arg1, int position, long arg3) {
-        Toast.makeText(getApplicationContext(),"Clicked",Toast.LENGTH_SHORT).show();
         item = adapter.getItemAtPosition(position).toString();
         atlDial = new AlertDialog.Builder(CompletedRequestsActivity.this);
-        atlDial.setMessage("Do you want to accept this Request?" + "\n"+item).setCancelable(false)
+        atlDial.setMessage("This machine issue is Resolved? " + "\n").setCancelable(false)
                 .setPositiveButton("Yes", new DialogInterface.OnClickListener() {
                     @Override
                     public void onClick(DialogInterface dialog, int which) {
-
                         insert(item);
-                        Toast.makeText(getApplicationContext(),"Repair request logged.",Toast.LENGTH_SHORT).show();
+                        Toast.makeText(getApplicationContext(),"Machine Issue resolved.",Toast.LENGTH_SHORT).show();
                         startActivity(new Intent(CompletedRequestsActivity.this,MechanicActivity.class));
                     }
                 }).setNegativeButton("No", new DialogInterface.OnClickListener() {
             @Override
             public void onClick(DialogInterface dialog, int which) {
-                Toast.makeText(getApplicationContext(),"Rejected by Mechanic",Toast.LENGTH_SHORT).show();
+                Toast.makeText(getApplicationContext(),"Repairing still in progress.",Toast.LENGTH_SHORT).show();
+                startActivity(new Intent(CompletedRequestsActivity.this,MechanicActivity.class));
             }
         });
 
