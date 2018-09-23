@@ -13,7 +13,7 @@ import com.google.firebase.database.FirebaseDatabase;
 
 public class OperatorActivity extends AppCompatActivity {
 
-    private Button submitBtn;
+
     private EditText editCardNo, editLineNo, editMachineNo;
 
     @Override
@@ -21,7 +21,7 @@ public class OperatorActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_operator);
         setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_PORTRAIT);
-
+        Button submitBtn;
         submitBtn = findViewById(R.id.submitBtn);
         editCardNo = findViewById(R.id.editCardNo);
         editLineNo = findViewById(R.id.editLineNo);
